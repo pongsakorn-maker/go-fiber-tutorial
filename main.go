@@ -22,7 +22,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/api/v1/book", book.GetBooks)
 	app.Get("/api/v1/book/:id", book.GetBook)
 	app.Post("/api/v1/book", book.NewBook)
-	app.Delete("/api/v1/book", book.DeleteBook)
+	app.Delete("/api/v1/book/:id", book.DeleteBook)
 }
 
 func initDatabase() {
