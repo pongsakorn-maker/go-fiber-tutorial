@@ -1,12 +1,19 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/pongsakorn-maker/go-fiber-tutorial/book"
+	"github.com/pongsakorn-maker/go-fiber-tutorial/database"
 )
 
 func main() {
 	app := fiber.New()
+	initDatabase()
+	defer database.DBConnection.Close()
 	setupRoutes(app)
 	app.Listen(3000)
 }
@@ -18,6 +25,13 @@ func setupRoutes(app *fiber.App) {
 	app.Delete("/api/v1/book", book.DeleteBook)
 }
 
-func helloWorld(c *fiber.Ctx) {
-	c.Send("Hello, World!")
+func initDatabase() {
+	var err error
+	database.DBConnection, err = gorm.Open("sqlite3", "books.db")
+	if err != nil {
+		panic("Failed to connect to database")
+	}
+	fmt.Println("Database connection successfully opened")
+	database.DBConnection.AutoMigrate(&book.Book{})
+	fmt.Println("Database Migrated")
 }
