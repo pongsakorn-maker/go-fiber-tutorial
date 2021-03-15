@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/gofiber/cors"
 	"github.com/gofiber/fiber"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -12,6 +13,7 @@ import (
 
 func main() {
 	app := fiber.New()
+	app.Use(cors.New())
 	initDatabase()
 	defer database.DBConnection.Close()
 	setupRoutes(app)

@@ -8,9 +8,9 @@ import (
 
 type Book struct {
 	gorm.Model
-	Title  string `json:"title"`
-	Author string `json:"author"`
-	Rating int    `json:"rating"`
+	Title  string `json:"Title"`
+	Author string `json:"Author"`
+	Rating int    `json:"Rating"`
 }
 
 func GetBooks(c *fiber.Ctx) {
